@@ -5,9 +5,12 @@ using UnityEngine;
 public class CellManager : MonoBehaviour
 {
     public GameObject cellPrefab;
-    public Texture2D bombTexture;
+    public Sprite bombSprite;
+    public Sprite cellSprite;
+    public Sprite backgroundSprite;
 
     public Vector2 dimensions;
+    public ushort bombAmount;
 
     private Dictionary<Vector2, Cell> positionToCell;
     private List<Cell> bombs;
@@ -15,36 +18,60 @@ public class CellManager : MonoBehaviour
     private CellManager() {}
     public static CellManager Instance { get { return Singleton.instance; } }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ExplodeAllBombs()
     {
+        foreach (Cell bomb in bombs)
+        {
+            ChangeCell(bomb, "bomb");
+        }
 
+        // Game is lost
     }
 
-    public void Reveal(Cell cell)
+    public void ChangeCell(Cell cell, string type)
     {
-
+        switch (type)
+        {
+            case "radar":
+                break;
+            case "flag":
+                break;
+            case "bomb":
+                break;
+        }
     }
 
     private void GenerateBoard()
     {
-
+        for (int x = 0; x < dimensions.x; x++)
+        {
+            for (int y = 0; y < dimensions.y; y++)
+            {
+                // Create cell sprite with offsets
+                // Add cell to positionToCell
+                // Create background with -1 less rendering order
+                // Make background child of cell
+            }
+        }
     }
 
-    private void ChangeGraphic(Cell cell)
+    private void GenerateBombs()
     {
+        Vector2 position = new Vector2();
 
+        for (int i = 0; i < bombAmount; i++)
+        {
+            Cell cell;
+
+            do
+            {
+                // Generate random position
+                positionToCell.TryGetValue(position, out cell);
+            } while (cell.isBomb || cell == null);
+
+            cell.isBomb = true;
+            ChangeCell(cell, "bomb");
+        }
     }
 
     private class Singleton

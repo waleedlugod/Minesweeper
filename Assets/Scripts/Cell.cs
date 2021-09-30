@@ -15,33 +15,32 @@ public class Cell : MonoBehaviour
         // If left click is pressed
         if (Input.GetMouseButtonDown(0))
         {
-            InteractLeftClick();
+            HandleLeftClick();
         }
         // If right click is pressed
         else if (Input.GetMouseButtonDown(1))
         {
-            InteractRightClick();
+            HandleRightClick();
         }
     }
 
-    private void InteractLeftClick()
+    private void HandleLeftClick()
     {
         if (!isFlagged && !isRevealed)
         {
-            // Call cell manager class to reveal cell contents
+            CellManager.Instance.ChangeCell(this, "radar");
             isRevealed = true;
 
             if (isBomb)
             {
-                // Call cell manager to change graphic to bomb
-                // Call cell manager class to explode all bombs
+                CellManager.Instance.ExplodeAllBombs();
             }
         }
     }
 
-    private void InteractRightClick()
+    private void HandleRightClick()
     {
         isFlagged = !isFlagged;
-        // Call cell manager to change graphic to flagged
+        CellManager.Instance.ChangeCell(this, "flag");
     }
 }
