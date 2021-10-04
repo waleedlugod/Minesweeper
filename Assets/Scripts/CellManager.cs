@@ -12,11 +12,19 @@ public class CellManager : MonoBehaviour
     public Vector2 dimensions;
     public ushort bombAmount;
 
-    private Dictionary<Vector2, Cell> positionToCell;
+    [SerializeField]
+    private Dictionary<Vector2, Cell> coordsToCell;
+    [SerializeField]
     private List<Cell> bombs;
 
+    // Create singleton
     private CellManager() {}
     public static CellManager Instance { get { return Singleton.instance; } }
+
+    private void Start()
+    {
+        GenerateBoard();
+    }
 
     public void ExplodeAllBombs()
     {
@@ -37,43 +45,64 @@ public class CellManager : MonoBehaviour
             case "flag":
                 break;
             case "bomb":
+                cell.GetComponent<SpriteRenderer>().sprite = bombSprite;
                 break;
         }
     }
 
+    public void RevealCell(Cell cell)
+    {
+        // Reveal amount of adjacent bombs
+        // If no bombs are adjacent, reveal all surrounding cells
+    }
+
     private void GenerateBoard()
     {
+        coordsToCell = new Dictionary<Vector2, Cell>();
         for (int x = 0; x < dimensions.x; x++)
         {
             for (int y = 0; y < dimensions.y; y++)
             {
                 // Create cell sprite with offsets
-                // Add cell to positionToCell
-                // Create background with -1 less rendering order
-                // Make background child of cell
+                GameObject cellObject = Instantiate(cellPrefab, transform, true);
+
+                // Offset the cells so that the edges are touching and none are overlapping.
+                Vector3 cellSize = cellObject.GetComponent<SpriteRenderer>().bounds.size;
+                cellObject.transform.position = new Vector2(
+                    cellObject.transform.position.x + x * cellSize.x
+                    , cellObject.transform.position.y + y * cellSize.y);
+
+                coordsToCell.Add(new Vector2(x, y), cellObject.GetComponent<Cell>());
             }
         }
     }
 
     private void GenerateBombs()
     {
-        Vector2 position = new Vector2();
+        Vector2 coordinate = new Vector2();
 
         for (int i = 0; i < bombAmount; i++)
         {
             Cell cell;
-
             do
             {
-                // Generate random position
-                positionToCell.TryGetValue(position, out cell);
-            } while (cell.isBomb || cell == null);
+                do
+                {
+                    // Generate random coordinate
+
+                    coordsToCell.TryGetValue(coordinate, out cell);
+                } while (cell == null);
+            } while (cell.isBomb);
+            
 
             cell.isBomb = true;
             ChangeCell(cell, "bomb");
+
+            bombs.Add(cell);
         }
     }
 
+    // Create singleton
     private class Singleton
     {
         // Explicit static constructor to tell C# compiler not to mark types as beforefieldinit

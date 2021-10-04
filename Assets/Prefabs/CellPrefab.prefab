@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2294004312114654451}
   - component: {fileID: 2766200163366392649}
   m_Layer: 0
-  m_Name: Cell
+  m_Name: CellPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636374190648820064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7383181, y: 0.21562329, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

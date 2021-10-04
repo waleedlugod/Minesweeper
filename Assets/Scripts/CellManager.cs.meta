@@ -4,8 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - cellPrefab: {fileID: 4835913941695992209, guid: 8f0bebcc52fc3fd4e87fa28c40cacbef, type: 3}
-  - bombTexture: {fileID: 2800000, guid: 193746af452d85f4fb1177171762f162, type: 3}
+  - cellPrefab: {instanceID: 0}
+  - bombSprite: {instanceID: 0}
+  - cellSprite: {instanceID: 0}
+  - backgroundSprite: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

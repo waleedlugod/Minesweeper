@@ -28,8 +28,8 @@ public class Cell : MonoBehaviour
     {
         if (!isFlagged && !isRevealed)
         {
-            CellManager.Instance.ChangeCell(this, "radar");
             isRevealed = true;
+            CellManager.Instance.RevealCell(this);
 
             if (isBomb)
             {
